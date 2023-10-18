@@ -1,7 +1,13 @@
-const { default: inquirer } = require("inquirer");
+const inquirer = require("inquirer");
+// const db = require('../db')
 
 inquirer
 .prompt([
+    {
+        type: "list",
+        name: "choice",
+        message: "What would you like to do?",
+        choices: [
     {
         name: "view_departments",
         type: "list",
@@ -36,5 +42,10 @@ inquirer
         name: "add_employee_role",
         type: "",
         message: ""
-    }, 
-]);
+    }
+]}
+])
+
+.then(answer => {
+    console.log(answer)
+})

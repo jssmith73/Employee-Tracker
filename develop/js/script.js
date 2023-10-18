@@ -5,3 +5,7 @@ sql = require ('sql2');
 inquirer = require ('inquirer');
 
 app = express();
+
+if (answer === view_departments) {
+    
+}
