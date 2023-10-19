@@ -10,7 +10,7 @@ CREATE TABLE departments (
     PRIMARY KEY(id)
 );
 
-UPDATE TABLE roles (
+CREATE TABLE roles (
     id INT, 
     title VARCHAR(50) NOT NULL,
     salary DECIMAL(6,1),
@@ -20,12 +20,12 @@ UPDATE TABLE roles (
     ON DELETE SET NULL
 );
 
-UPDATE TABLE employees (
+CREATE TABLE employees (
     id INT, 
     first_name VARCHAR(30) NOT NULL,
-    last_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30),
     role_id INT,
     FOREIGN KEY (role_id)
     REFERENCES roles(id)
     ON DELETE SET NULL
-);
+)

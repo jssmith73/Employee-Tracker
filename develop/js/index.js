@@ -48,4 +48,7 @@ inquirer
 
 .then(answer => {
     console.log(answer)
+
+    if(answer === 'view_departments')
+    'SELECT * FROM DEPARTMENTS';
 })
