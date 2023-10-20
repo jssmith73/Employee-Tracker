@@ -1,54 +1,63 @@
 const inquirer = require("inquirer");
-// const db = require('../db')
+// const sql = require('mysql2');
+const DB = require('./queries')
 
-inquirer
-.prompt([
+
+const option = [
     {
         type: "list",
         name: "choice",
         message: "What would you like to do?",
         choices: [
     {
-        name: "view_departments",
-        type: "list",
-        message: "View Departments"
+        name: "View All Departments",
+        value: "VIEW_DEPARTMENTS"
     }, 
     {
-        name: "view_roles",
-        type: "",
-        message: ""
+        name: "View All Roles",
+        value: ""
     }, 
     {
-        name: "view_employees",
-        type: "",
-        message: ""
+        name: "View All Employees",
+        value: ""
     }, 
     {
-        name: "add_dept",
-        type: "",
-        message: ""
+        name: "Add a Department",
+        value: ""
     }, 
     {
-        name: "add_role",
-        type: "",
-        message: ""
+        name: "Add a Role",
+        value: ""
     }, 
     {
-        name: "add_employee",
-        type: "",
-        message: ""
+        name: "Add an Employee",
+        value: ""
     }, 
     {
-        name: "add_employee_role",
-        type: "",
-        message: ""
+        name: "Add an Employee Role",
+        value: ""
     }
 ]}
-])
+]
 
-.then(answer => {
-    console.log(answer)
+const call = () => {
 
-    if(answer === 'view_departments')
-    db.query
-})
+    console.log('call() running')
+
+inquirer
+.prompt (option)
+
+.then((choice) => {
+
+    if (choice = "View All Departments")
+return viewAllDepartments();
+    }
+)
+
+//View all departments function
+function viewAllDepartments() {
+    DB.viewDepartments()
+}}
+
+
+call();

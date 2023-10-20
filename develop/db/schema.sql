@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS my_company:
+DROP DATABASE IF EXISTS my_company;
 
 CREATE DATABASE my_company;
 
