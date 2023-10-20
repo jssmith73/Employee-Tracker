@@ -2,7 +2,7 @@ INSERT INTO departments (name)
 VALUES ('IT'),
        ('Human Resources'),
        ('Production'),
-       ('R&R'),
+       ('R&D'),
        ('Management');
 
 INSERT INTO roles (title, salary, dept_id)

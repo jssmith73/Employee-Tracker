@@ -15,49 +15,104 @@ const option = [
     }, 
     {
         name: "View All Roles",
-        value: ""
+        value: "VIEW_ROLES"
     }, 
     {
         name: "View All Employees",
-        value: ""
+        value: "VIEW_EMPLOYEES"
     }, 
     {
         name: "Add a Department",
-        value: ""
+        value: "ADD_DEPT"
     }, 
     {
         name: "Add a Role",
-        value: ""
+        value: "ADD_ROLE"
     }, 
     {
         name: "Add an Employee",
-        value: ""
+        value: "ADD_EMP"
     }, 
     {
         name: "Add an Employee Role",
-        value: ""
+        value: "ADD_EMP_ROLE"
     }
 ]}
 ]
 
 const call = () => {
 
-    console.log('call() running')
-
 inquirer
 .prompt (option)
 
-.then((choice) => {
+.then(res => {
+    let choice = res.choice;
 
-    if (choice = "View All Departments")
-return viewAllDepartments();
-    }
-)
+switch (choice) {
+
+case "VIEW_DEPARTMENTS": 
+  viewAllDepartments();
+  break
+
+case "VIEW_ROLES":
+    viewAllRoles();
+    break
+
+case "VIEW_EMPLOYEES":
+    viewAllEmployees();
+    break
+
+case "ADD_DEPT":
+    addDepartment();
+    break
+
+case "ADD_ROLE":
+    add_role();
+    break
+
+case "ADD_EMP":
+    add_employee();
+    break
+
+case "ADD_EMP_ROLE":
+    update_employee_role();
+
+}});
 
 //View all departments function
 function viewAllDepartments() {
-    DB.viewDepartments()
-}}
+    DB.viewDepartments().then(([rows]) => {
+        let employees = rows;
+        console.log("\n");
+        console.table(employees);
+    })
+}
+
+function viewAllRoles() {
+    DB.viewRoles().then(([rows]) => {
+        let employees = rows;
+        console.log("\n");
+        console.table(employees);
+    })
+}
+
+function viewAllEmployees() {
+    DB.viewEmployees().then(([rows]) => {
+        let employees = rows;
+        console.log("\n");
+        console.table(employees);
+    })
+}
+
+function addDepartment() {
+    DB.addDepartment().then(([rows]) => {
+        let departments = rows;
+        console.log("\n");
+        console.table(departments);
+    })
+}
+
+}
 
 
 call();
