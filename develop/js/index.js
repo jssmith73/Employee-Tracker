@@ -90,13 +90,21 @@ case "ADD_ROLE":
             message: "What is the salary?"
         }
     ])
-    
+
     .then(res =>
     addRole(DB.addRole(res.answer)));
     addRole();
     break
 
 case "ADD_EMP":
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "first_name",
+            message: "What is the employee's first name?"
+        }
+    ])
     add_employee();
     break
 
