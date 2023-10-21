@@ -26,9 +26,16 @@ viewEmployees() {
        "SELECT employees.id, employees.first_name, employees.last_name, employees.role_id FROM employees"
     )};
 
-addDepartment() {
-    return this.connection.promise().query("INSERT INTO departments SET ?", departments
-    )}
+addDepartment(viewDepartments) {
+
+    console.log("New department saved!");
+    return this.connection.promise().query("INSERT INTO departments VALUES (?)", viewDepartments,
+    )}    
+
+addRole(viewRoles) {
+    return this.connection.promicse().quiery("INSERT INTO roles(NAME) VALUES ('butts')",
+    viewRoles
+    )};
 };
 
 module.exports = new DB(connection);

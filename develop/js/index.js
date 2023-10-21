@@ -23,7 +23,7 @@ const option = [
     }, 
     {
         name: "Add a Department",
-        value: "ADD_DEPT"
+        value: "ADD_DEPT",
     }, 
     {
         name: "Add a Role",
@@ -63,7 +63,17 @@ case "VIEW_EMPLOYEES":
     break
 
 case "ADD_DEPT":
-    addDepartment();
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "departmentName",
+            message: "What is the name of the new department?"
+        }
+    ])
+
+    .then(res =>
+    addDepartment(DB.addDepartment(res.answer)));
     break
 
 case "ADD_ROLE":
@@ -99,16 +109,44 @@ function viewAllRoles() {
 function viewAllEmployees() {
     DB.viewEmployees().then(([rows]) => {
         let employees = rows;
+        const departmentOptions = departments.map(({id, name}) => ({ name: name,
+        value: id}));
         console.log("\n");
         console.table(employees);
-    })
+    });
 }
 
 function addDepartment() {
-    DB.addDepartment().then(([rows]) => {
-        let departments = rows;
+
+(res) =>
+DB.addDepartment(res.departmentName).then(([rows]) => {
+    let departments = rows;
+    console.log("\n");
+    console.table(departments);
+    })
+};
+
+function addRole() {
+    DB.addRole('NEW ROLE').then(([rows]) => {
+        let roles = rows;
         console.log("\n");
-        console.table(departments);
+        console.table(roles);
+    })
+}
+
+function addEmployee() {
+    DB.addRole().then(([rows]) => {
+        let employee = rows;
+        console.log("\n");
+        console.table(employee);
+    })
+}
+
+function addEmployeeRole() {
+    DB.addEmployeeRole().then(([rows]) => {
+        let roles = rows;
+        console.log("\n");
+        console.table(roles);
     })
 }
 
