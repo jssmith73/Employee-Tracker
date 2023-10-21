@@ -29,12 +29,12 @@ viewEmployees() {
 addDepartment(viewDepartments) {
 
     console.log("New department saved!");
-    return this.connection.promise().query("INSERT INTO departments(name) VALUES ('test')", viewDepartments,
+    return this.connection.promise().query("INSERT INTO departments(name) VALUES (?)", [viewDepartments],
     )}    
 
-addRole(viewRoles) {
-    return this.connection.promicse().quiery("INSERT INTO roles(NAME) VALUES ('butts')",
-    viewRoles
+addRole(res) {
+    return this.connection.promise().query("INSERT INTO roles (title, salary, dept_id) VALUES (?)",
+    [res]
     )};
 };
 

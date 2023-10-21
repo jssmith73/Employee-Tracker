@@ -77,7 +77,23 @@ case "ADD_DEPT":
     break
 
 case "ADD_ROLE":
-    add_role();
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "title",
+            message: "What is the title of the new role?"
+        },
+        {
+            type: "input",
+            name: "salary",
+            message: "What is the salary?"
+        }
+    ])
+    
+    .then(res =>
+    addRole(DB.addRole(res.answer)));
+    addRole();
     break
 
 case "ADD_EMP":
@@ -109,8 +125,8 @@ function viewAllRoles() {
 function viewAllEmployees() {
     DB.viewEmployees().then(([rows]) => {
         let employees = rows;
-        const departmentOptions = departments.map(({id, name}) => ({ name: name,
-        value: id}));
+        // const departmentOptions = departments.map(({id, name}) => ({ name: name,
+        // value: id}));
         console.log("\n");
         console.table(employees);
     });
@@ -118,8 +134,7 @@ function viewAllEmployees() {
 
 function addDepartment() {
 
-(res) =>
-DB.addDepartment(res.departmentName).then(([rows]) => {
+DB.addDepartment().then(([rows]) => {
     let departments = rows;
     console.log("\n");
     console.table(departments);
@@ -127,7 +142,7 @@ DB.addDepartment(res.departmentName).then(([rows]) => {
 };
 
 function addRole() {
-    DB.addRole('NEW ROLE').then(([rows]) => {
+    DB.addRole().then(([rows]) => {
         let roles = rows;
         console.log("\n");
         console.table(roles);
