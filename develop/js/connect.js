@@ -13,4 +13,5 @@ const server = mysql.createConnection(
     console.log('Connected to my_company')
 );
 
+//Exports to queries
 module.exports = server;

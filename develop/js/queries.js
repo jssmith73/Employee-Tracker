@@ -1,5 +1,4 @@
 const connection = require('./connect');
-const sql = require('./connect');
 
 class DB {
 
@@ -15,16 +14,22 @@ viewDepartments() {
     );
 };
 
+//View all roles
+
 viewRoles() {
     return this.connection.promise().query(
        "SELECT roles.id, roles.title, roles.salary, roles.dept_id FROM roles;"
     );
 };
 
+//View all employees
+
 viewEmployees() {
     return this.connection.promise().query(
        "SELECT employees.id, employees.first_name, employees.last_name, employees.role_id FROM employees"
     )};
+
+//Add a department
 
 addDepartment(viewDepartments) {
 
@@ -32,10 +37,13 @@ addDepartment(viewDepartments) {
     return this.connection.promise().query("INSERT INTO departments(name) VALUES (?)", [viewDepartments],
     )}    
 
-addRole(res) {
-    return this.connection.promise().query("INSERT INTO roles (title, salary, dept_id) VALUES (?)",
-    [res]
+//Add a role
+
+addRole(addRole) {
+    return this.connection.promise().query("INSERT INTO roles (id, title, salary, role_id) SET ?",
+    [addRole],
     )};
 };
 
+//Exports to index.js
 module.exports = new DB(connection);

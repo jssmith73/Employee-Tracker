@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
-// const sql = require('mysql2');
 const DB = require('./queries')
+const connection = require('./connect');
+
 
 
 const option = [
@@ -34,8 +35,20 @@ const option = [
         value: "ADD_EMP"
     }, 
     {
-        name: "Add an Employee Role",
-        value: "ADD_EMP_ROLE"
+        name: "Update an Employee Role",
+        value: "UPDATE_EMP_ROLE"
+    },
+    {
+        name: "Delete a Department",
+        value: "DELETE_DEPT"
+    },
+    {
+        name: "Delete a Role",
+        value: "DELETE_ROLE"
+    },
+    {
+        name: "Delete an Employee",
+        value: "DELETE_EMP"
     }
 ]}
 ]
@@ -72,11 +85,16 @@ case "ADD_DEPT":
         }
     ])
 
-    .then(res =>
-    addDepartment(DB.addDepartment(res.answer)));
+    .then( function(answers) {
+        console.log(answers);
+        connection.query('INSERT INTO departments SET ?', {
+            name: answers.departmentName,
+        }
+    )}
+    )
     break
 
-case "ADD_ROLE":
+    case "ADD_ROLE":
     inquirer
     .prompt([
         {
@@ -88,28 +106,104 @@ case "ADD_ROLE":
             type: "input",
             name: "salary",
             message: "What is the salary?"
+        },
+        {
+            type: "input",
+            name: "dept_id",
+            message: "What is the department id?"
         }
     ])
 
-    .then(res =>
-    addRole(DB.addRole(res.answer)));
-    addRole();
+    .then( function(answers) {
+        console.log(answers);
+        connection.query('INSERT INTO roles SET ?', {
+            title: answers.title,
+            salary: answers.salary,
+            dept_id: answers.dept_id
+        }
+    )}
+    )
     break
-
-case "ADD_EMP":
+    
+    case "ADD_EMP":
     inquirer
     .prompt([
         {
             type: "input",
             name: "first_name",
             message: "What is the employee's first name?"
+        },
+        {
+            type: "input",
+            name: "last_name",
+            message: "What is the employee's last name?"
+        },
+        {
+            type: "input",
+            name: "role_id",
+            message: "What is the employees role ID?"
         }
     ])
-    add_employee();
+
+    .then( function(answers) {
+        console.log(answers);
+        connection.query('INSERT INTO employees SET ?', {
+            first_name: answers.first_name,
+            last_name: answers.last_name,
+            role_id: answers.role_id
+        }
+    )}
+    )
     break
 
-case "ADD_EMP_ROLE":
-    update_employee_role();
+    case "UPDATE_EMP_ROLE":
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "first_name",
+            message: "What is the employee's first name?"
+        },
+        {
+            type: "input",
+            name: "last_name",
+            message: "What is the employee's last name?"
+        },
+        {
+            type: "input",
+            name: "role_id",
+            message: "What is the employees role?"
+        }
+    ])
+    
+    .then( function(answers) {
+        console.log(answers);
+        connection.query('SELECT DISTINCT first_name, last_name UPDATE employees SET ?', {
+            first_name: answers.first_name,
+            last_name: answers.last_name,
+            role_id: answers.role_id
+        }
+    )}
+    )
+    break
+    
+    case "DELETE_EMP":
+        inquirer
+        .prompt([
+            
+            {
+                type: "input",
+                name: "employeeId",
+                message: "What is the employee ID?"
+            }
+        ])
+
+        .then(function(answers) {
+            console.log(answers);
+            connection.query('DELETE FROM employees WHERE ?', 
+            { id: answers.employeeId }
+        )}
+        )
 
 }});
 
