@@ -94,7 +94,7 @@ case "ADD_DEPT":
     )
     break
 
-    case "ADD_ROLE":
+case "ADD_ROLE":
     inquirer
     .prompt([
         {
@@ -125,7 +125,7 @@ case "ADD_DEPT":
     )
     break
     
-    case "ADD_EMP":
+case "ADD_EMP":
     inquirer
     .prompt([
         {
@@ -154,34 +154,29 @@ case "ADD_DEPT":
         }
     )}
     )
-    break
+     break
 
     case "UPDATE_EMP_ROLE":
     inquirer
     .prompt([
         {
             type: "input",
-            name: "first_name",
-            message: "What is the employee's first name?"
-        },
-        {
-            type: "input",
-            name: "last_name",
-            message: "What is the employee's last name?"
+            name: "employee_id",
+            message: "What is the employee ID?"
         },
         {
             type: "input",
             name: "role_id",
-            message: "What is the employees role?"
+            message: "What is the employees new role ID?"
         }
     ])
     
     .then( function(answers) {
         console.log(answers);
-        connection.query('SELECT DISTINCT first_name, last_name UPDATE employees SET ?', {
-            first_name: answers.first_name,
-            last_name: answers.last_name,
-            role_id: answers.role_id
+        connection.query('UPDATE employees SET role_id = ? WHERE id = ?', {
+            
+            role_id: answers.role_id,
+            id: answers.id
         }
     )}
     )
@@ -207,7 +202,10 @@ case "ADD_DEPT":
 
 }});
 
+//VIEW FUNCTIONS
+
 //View all departments function
+
 function viewAllDepartments() {
     DB.viewDepartments().then(([rows]) => {
         let employees = rows;
@@ -215,6 +213,8 @@ function viewAllDepartments() {
         console.table(employees);
     })
 }
+
+//View Roles
 
 function viewAllRoles() {
     DB.viewRoles().then(([rows]) => {
@@ -224,50 +224,16 @@ function viewAllRoles() {
     })
 }
 
+//View Employees
+
 function viewAllEmployees() {
     DB.viewEmployees().then(([rows]) => {
         let employees = rows;
-        // const departmentOptions = departments.map(({id, name}) => ({ name: name,
-        // value: id}));
         console.log("\n");
         console.table(employees);
     });
 }
 
-function addDepartment() {
-
-DB.addDepartment().then(([rows]) => {
-    let departments = rows;
-    console.log("\n");
-    console.table(departments);
-    })
-};
-
-function addRole() {
-    DB.addRole().then(([rows]) => {
-        let roles = rows;
-        console.log("\n");
-        console.table(roles);
-    })
 }
-
-function addEmployee() {
-    DB.addRole().then(([rows]) => {
-        let employee = rows;
-        console.log("\n");
-        console.table(employee);
-    })
-}
-
-function addEmployeeRole() {
-    DB.addEmployeeRole().then(([rows]) => {
-        let roles = rows;
-        console.log("\n");
-        console.table(roles);
-    })
-}
-
-}
-
 
 call();
