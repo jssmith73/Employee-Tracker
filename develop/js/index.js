@@ -50,6 +50,7 @@ const option = [
         name: "Delete an Employee",
         value: "DELETE_EMP"
     }
+    
 ]}
 ]
 
@@ -92,6 +93,7 @@ case "ADD_DEPT":
         }
     )}
     )
+
     break
 
 case "ADD_ROLE":
@@ -110,7 +112,7 @@ case "ADD_ROLE":
         {
             type: "input",
             name: "dept_id",
-            message: "What is the department id?"
+            message: "What department does this role belong to?"
         }
     ])
 
@@ -123,6 +125,7 @@ case "ADD_ROLE":
         }
     )}
     )
+    
     break
     
 case "ADD_EMP":
@@ -156,9 +159,9 @@ case "ADD_EMP":
     )
      break
 
-    case "UPDATE_EMP_ROLE":
-    inquirer
-    .prompt([
+case "UPDATE_EMP_ROLE":
+        inquirer
+        .prompt([
         {
             type: "input",
             name: "employee_id",
@@ -173,33 +176,67 @@ case "ADD_EMP":
     
     .then( function(answers) {
         console.log(answers);
-        connection.query('UPDATE employees SET role_id = ? WHERE id = ?', {
-            
-            role_id: answers.role_id,
-            id: answers.id
-        }
+        connection.query('UPDATE employees SET role_id = ? WHERE id = ?', 
+            [answers.role_id, answers.employee_id]          
     )}
     )
     break
-    
-    case "DELETE_EMP":
-        inquirer
-        .prompt([
+
+case "DELETE_DEPT":
+    inquirer
+    .prompt([
             
-            {
-                type: "input",
-                name: "employeeId",
-                message: "What is the employee ID?"
-            }
+        {
+            type: "input",
+            name: "departmentId",
+            message: "What is the department ID?"
+        }
         ])
 
-        .then(function(answers) {
+    .then(function(answers) {
             console.log(answers);
-            connection.query('DELETE FROM employees WHERE ?', 
-            { id: answers.employeeId }
+            connection.query('DELETE FROM departments WHERE ?', 
+            { id: answers.departmentId }
         )}
         )
+    break
+    
+case "DELETE_ROLE":
+    inquirer
+    .prompt([
+            
+        {
+            type: "input",
+            name: "roleId",
+            message: "What is the role ID?"
+        }
+        ])
 
+    .then(function(answers) {
+            console.log(answers);
+            connection.query('DELETE FROM roles WHERE ?', 
+            { id: answers.roleId }
+        )}
+        )
+    break
+
+case "DELETE_EMP":
+    inquirer
+    .prompt([
+                    
+        {
+            type: "input",
+            name: "employeeId",
+            message: "What is the employee ID?"
+        }
+        ])
+        
+        .then(function(answers) {
+            console.log(answers);
+             connection.query('DELETE FROM employees WHERE ?', 
+            { id: answers.employeeId }
+            )}
+         )
 }});
 
 //VIEW FUNCTIONS
@@ -212,6 +249,10 @@ function viewAllDepartments() {
         console.log("\n");
         console.table(employees);
     })
+
+    //Returns to main prompt
+    console.log("\n");
+    call();
 }
 
 //View Roles
@@ -222,6 +263,8 @@ function viewAllRoles() {
         console.log("\n");
         console.table(employees);
     })
+
+    call();
 }
 
 //View Employees
@@ -232,6 +275,8 @@ function viewAllEmployees() {
         console.log("\n");
         console.table(employees);
     });
+
+    call();
 }
 
 }
