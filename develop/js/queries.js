@@ -26,7 +26,7 @@ viewRoles() {
 
 viewEmployees() {
     return this.connection.promise().query(
-       "SELECT employees.id, employees.first_name, employees.last_name, employees.role_id, manager_id FROM employees"
+       "SELECT employees.id, employees.first_name, employees.last_name, employees.role_id FROM employees"
     )};
 
 //Add a department
