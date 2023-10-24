@@ -90,7 +90,8 @@ case "ADD_DEPT":
         console.log(answers);
         connection.query('INSERT INTO departments SET ?', {
             name: answers.departmentName,
-        }
+        },
+        call()
     )}
     )
 
@@ -112,7 +113,7 @@ case "ADD_ROLE":
         {
             type: "input",
             name: "dept_id",
-            message: "What department does this role belong to?"
+            message: "What is the Department ID of this role?"
         }
     ])
 
@@ -122,7 +123,8 @@ case "ADD_ROLE":
             title: answers.title,
             salary: answers.salary,
             dept_id: answers.dept_id
-        }
+        },
+        call()
     )}
     )
     
@@ -145,6 +147,12 @@ case "ADD_EMP":
             type: "input",
             name: "role_id",
             message: "What is the employees role ID?"
+        },
+        {
+            type: "list",
+            name: "manager_id",
+            message: "What is this employee's manager ID?",
+            choices: ["1" , "3", "5", "7"]
         }
     ])
 
@@ -153,8 +161,10 @@ case "ADD_EMP":
         connection.query('INSERT INTO employees SET ?', {
             first_name: answers.first_name,
             last_name: answers.last_name,
-            role_id: answers.role_id
-        }
+            role_id: answers.role_id,
+            manager_id: answers.manager_id
+        },
+        call()
     )}
     )
      break
@@ -177,7 +187,9 @@ case "UPDATE_EMP_ROLE":
     .then( function(answers) {
         console.log(answers);
         connection.query('UPDATE employees SET role_id = ? WHERE id = ?', 
-            [answers.role_id, answers.employee_id]          
+            [answers.role_id, answers.employee_id],
+            
+            call()
     )}
     )
     break
@@ -196,7 +208,8 @@ case "DELETE_DEPT":
     .then(function(answers) {
             console.log(answers);
             connection.query('DELETE FROM departments WHERE ?', 
-            { id: answers.departmentId }
+            { id: answers.departmentId },
+            call()
         )}
         )
     break
@@ -215,7 +228,8 @@ case "DELETE_ROLE":
     .then(function(answers) {
             console.log(answers);
             connection.query('DELETE FROM roles WHERE ?', 
-            { id: answers.roleId }
+            { id: answers.roleId },
+            call()
         )}
         )
     break
@@ -226,15 +240,16 @@ case "DELETE_EMP":
                     
         {
             type: "input",
-            name: "employeeId",
-            message: "What is the employee ID?"
+            name: "employeeName",
+            message: "What is the employee's first name?"
         }
         ])
         
         .then(function(answers) {
             console.log(answers);
-             connection.query('DELETE FROM employees WHERE ?', 
-            { id: answers.employeeId }
+             connection.query('DELETE FROM employees WHERE ??', 
+            { first_name: answers.employeeName },
+            call()
             )}
          )
 }});
