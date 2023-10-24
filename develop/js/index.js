@@ -2,7 +2,7 @@ const inquirer = require("inquirer");
 const DB = require('./queries')
 const connection = require('./connect');
 
-
+//EMPLOYEE MANAGER PROMPTS
 
 const option = [
     {
@@ -54,6 +54,8 @@ const option = [
 ]}
 ]
 
+//FUNCTION TO EXECUTE PROMPT REQUESTS
+
 const call = () => {
 
 inquirer
@@ -63,6 +65,8 @@ inquirer
     let choice = res.choice;
 
 switch (choice) {
+
+//VIEW DEPTARTMENTS, ROLES, AND EMPLOYEES
 
 case "VIEW_DEPARTMENTS": 
   viewAllDepartments();
@@ -75,6 +79,11 @@ case "VIEW_ROLES":
 case "VIEW_EMPLOYEES":
     viewAllEmployees();
     break
+//-----------------------
+
+
+
+//ADD DEPARTMENTS, ROLES AND EMPLOYEES
 
 case "ADD_DEPT":
     inquirer
@@ -92,8 +101,7 @@ case "ADD_DEPT":
             name: answers.departmentName,
         },
         call()
-    )}
-    )
+    )})
 
     break
 
@@ -125,8 +133,7 @@ case "ADD_ROLE":
             dept_id: answers.dept_id
         },
         call()
-    )}
-    )
+    )})
     
     break
     
@@ -165,9 +172,11 @@ case "ADD_EMP":
             manager_id: answers.manager_id
         },
         call()
-    )}
-    )
+    )})
+
      break
+
+//UPDATE EMPLOYEE ROLE
 
 case "UPDATE_EMP_ROLE":
         inquirer
@@ -188,11 +197,13 @@ case "UPDATE_EMP_ROLE":
         console.log(answers);
         connection.query('UPDATE employees SET role_id = ? WHERE id = ?', 
             [answers.role_id, answers.employee_id],
-            
+
             call()
     )}
     )
     break
+
+//DELETE DEPARTMENTS, ROLES, AND EMPLOYEES
 
 case "DELETE_DEPT":
     inquirer
@@ -210,8 +221,8 @@ case "DELETE_DEPT":
             connection.query('DELETE FROM departments WHERE ?', 
             { id: answers.departmentId },
             call()
-        )}
-        )
+        )})
+
     break
     
 case "DELETE_ROLE":
@@ -230,8 +241,8 @@ case "DELETE_ROLE":
             connection.query('DELETE FROM roles WHERE ?', 
             { id: answers.roleId },
             call()
-        )}
-        )
+        )})
+
     break
 
 case "DELETE_EMP":
@@ -240,18 +251,17 @@ case "DELETE_EMP":
                     
         {
             type: "input",
-            name: "employeeName",
-            message: "What is the employee's first name?"
+            name: "employeeID",
+            message: "What is the employee's ID"
         }
         ])
         
         .then(function(answers) {
             console.log(answers);
-             connection.query('DELETE FROM employees WHERE ??', 
-            { first_name: answers.employeeName },
+             connection.query('DELETE FROM employees WHERE ?', 
+            { id: answers.employeeID },
             call()
-            )}
-         )
+            )})
 }});
 
 //VIEW FUNCTIONS
@@ -259,6 +269,8 @@ case "DELETE_EMP":
 //View all departments function
 
 function viewAllDepartments() {
+
+    
     DB.viewDepartments().then(([rows]) => {
         let employees = rows;
         console.log("\n");
@@ -266,8 +278,8 @@ function viewAllDepartments() {
     })
 
     //Returns to main prompt
-    console.log("\n");
     call();
+  
 }
 
 //View Roles

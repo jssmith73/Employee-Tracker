@@ -6,7 +6,7 @@ class DB {
         this.connection = connection;
     }
 
-    //View all departments
+//View all departments
 
 viewDepartments() {
     return this.connection.promise().query(
@@ -25,6 +25,7 @@ viewRoles() {
 //View all employees
 
 viewEmployees() {
+    
     return this.connection.promise().query(
         "SELECT employees.id, employees.first_name, employees.last_name, employees.role_id, employees.manager_id, " +
         "roles.title, roles.salary, departments.name " +
@@ -32,23 +33,8 @@ viewEmployees() {
         "LEFT JOIN roles ON employees.role_id = roles.id " +
         "LEFT JOIN departments ON roles.dept_id = departments.id"
     );
-}
-
-//Add a department
-
-addDepartment(viewDepartments) {
-
-    console.log("New department saved!");
-    return this.connection.promise().query("INSERT INTO departments(name) VALUES (?)", [viewDepartments],
-    )}    
-
-//Add a role
-
-addRole(addRole) {
-    return this.connection.promise().query("INSERT INTO roles (id, title, salary, role_id) SET ?",
-    [addRole],
-    )};
-};
+    
+}}
 
 //Exports to index.js
 module.exports = new DB(connection);
